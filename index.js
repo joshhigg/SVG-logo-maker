@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
 const examples = './examples'
-const { createDocument } = require('./lib/shapes')
+const shapes = require('./lib/shapes')
 
 
 inquirer
@@ -63,10 +63,14 @@ inquirer
      <text x="150" y="125" font-size="60" text-anchor="middle" fill="${logoData.textColor}">${logoData.text}</text>
     
     </svg>`;
-    console.log(logoCode);
-    
-    fs.writeFile(filename, logoCode, (err) =>
+    console.log(shapes.circle)
+
+    if (logoData.shape == 'circle') {
+        fs.writeFile(filename, logoCode, (err) =>
     err ? console.log(err) : console.log('Success!'));
+    } else console.log('sorry no shape')
+    
+
     
 });
 
