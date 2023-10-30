@@ -36,7 +36,7 @@ inquirer
         }
     ])
     .then((data) => {
-    const filename = path.join(examples, `logo.svg`);
+    const filename = path.join(examples, `${data.text}.svg`);
 
 
     const logoData = {
@@ -45,30 +45,34 @@ inquirer
         shape: data.shape,
         shapeColor: data.shapeColor
     }
-    console.log(logoData)
 
+    let shapeSvg = ``;
 
-    // insert the logoData into some svg that has been created.
+    if (logoData.shape == 'circle') {
+        const circle = new shapes.Circle(150, 100, 80, logoData.shapeColor);
+        shapeSvg = circle.getSvg();
+    } else if (logoData.shape == 'triangle') {
+        const triangle = new shapes.Triangle('150,0 20,200 280,200', logoData.shapeColor);
+        shapeSvg = triangle.getSvg();
+    } else if (logoData.shape == 'square') {
+        const square = new shapes.Square(50, 10, 200, 200, logoData.shapeColor);
+        shapeSvg = square.getSvg();
+    }
 
-
-    console.log(logoData.textColor);
 
     const logoCode = `
         <svg version="1.1"
         width="300" height="200"
         xmlns="http://www.w3.org/2000/svg">
     
-     <circle cx="150" cy="100" r="80" fill="${logoData.shapeColor}" />
+     ${shapeSvg}
     
      <text x="150" y="125" font-size="60" text-anchor="middle" fill="${logoData.textColor}">${logoData.text}</text>
     
     </svg>`;
-    console.log(shapes.circle)
-
-    if (logoData.shape == 'circle') {
-        fs.writeFile(filename, logoCode, (err) =>
+    
+    fs.writeFile(filename, logoCode, (err) =>
     err ? console.log(err) : console.log('Success!'));
-    } else console.log('sorry no shape')
     
 
     
