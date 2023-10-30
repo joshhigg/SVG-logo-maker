@@ -1,16 +1,18 @@
+// Import everything needed
 const inquirer = require('inquirer');
 const fs = require('fs');
 const path = require('path');
 const examples = './examples'
 const shapes = require('./lib/shapes')
 
-
+// Questions to ask the user for input
 inquirer
     .prompt([
         {
             type: 'input',
             name: 'text',
             message: 'Please enter logo text. (cannot exceed 3 characters)',
+            // Show error text if the input is more than 3 characters
             validate: (input) => {
                 if(input.length > 3) {
                     return 'Text cannot exceed 3 characters!'
@@ -36,6 +38,7 @@ inquirer
         }
     ])
     .then((data) => {
+    // New file is named after the input text
     const filename = path.join(examples, `${data.text}.svg`);
 
 
@@ -48,6 +51,7 @@ inquirer
 
     let shapeSvg = ``;
 
+    // If statements to handle each shape choice
     if (logoData.shape == 'circle') {
         const circle = new shapes.Circle(150, 100, 80, logoData.shapeColor);
         shapeSvg = circle.getSvg();
@@ -59,7 +63,7 @@ inquirer
         shapeSvg = square.getSvg();
     }
 
-
+    // Base SVG code to insert user selections
     const logoCode = `
         <svg version="1.1"
         width="300" height="200"
@@ -71,8 +75,9 @@ inquirer
     
     </svg>`;
     
+    // Create new file with the logoCode information
     fs.writeFile(filename, logoCode, (err) =>
-    err ? console.log(err) : console.log('Success!'));
+    err ? console.log(err) : console.log('Generated Logo!'));
     
 
     
