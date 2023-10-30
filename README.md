@@ -16,7 +16,6 @@ Run node index.js in the terminal to input your logo information.
 
 
 ### Questions
----
 [GitHub Link](https://github.com/joshhigg)
 
 If you have any questions, feel free to contact me at josh.higginson201@gmail.com.
